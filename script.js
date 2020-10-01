@@ -38,10 +38,12 @@ function useOperator(operator) {
        operatorValue = operator;
        return;
    }
-   if(!firstValue) {
+   if(!firstValue || firstValue.length > 3) {
        firstValue = currentValue;
+       calculatorDisplay.textContent = firstValue.toLocaleString();
+       calculatorDisplay.textContent = currentValue.toLocaleString();
    } else {
-       const calculation = calculate[operatorValue](firstValue, currentValue);
+       const calculation = calculate[operatorValue](firstValue, currentValue).toLocaleString();
        calculatorDisplay.textContent = calculation;
        firstValue = calculation;
    }
@@ -49,7 +51,7 @@ function useOperator(operator) {
    operatorValue = operator;
 }
 
-inputBtns.forEach((inputBtn) => {
+inputBtns.forEach(inputBtn => {
  if(inputBtn.classList.length === 0) {
     inputBtn.addEventListener('click', () => sendNumberValue(inputBtn.value));
 } else if (inputBtn.classList.contains('operator')) {
@@ -62,7 +64,7 @@ inputBtns.forEach((inputBtn) => {
 
 function resetAll() {
     firstValue = 0;
-    operator = '';
+    operatorValue = '';
     awaitingNextValue = false;
     calculatorDisplay.textContent = '0';
 }
